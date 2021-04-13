@@ -14,7 +14,7 @@ class MemberServiceTest {
     MemberService memberService;
     MemoryMemberRespository memberRespository;
 
-    // 직접 memberRespository를 new 하지않고 외부 생성자 통해 생석 => D.I
+    // 직접 memberRespository를 new 하지않고 외부 생성자 통해 생성 => D.I
     @BeforeEach
     void beforeEach(){
         memberRespository = new MemoryMemberRespository();
