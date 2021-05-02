@@ -1,39 +1,33 @@
 package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
+import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRespository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// 순수 자바 코드 단위 테스트
-// 속도가 빠름. 단위로 쪼갤수있음. 순수 자바로 많이 해봐야함
-class MemberServiceTest {
+// 스프링 컨테이너를 사용한 테스트
+@SpringBootTest
+@Transactional // 테스트 끝날때 데이터 롤백 (쿼리는 다 날렸지만 마지막에 다시 롤백)
+class MemberServiceIntegrationTest {
 
-    MemberService memberService;
-    MemoryMemberRespository memberRespository;
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRespository;
 
-    // 직접 memberRespository를 new 하지않고 외부 생성자 통해 생성 => D.I
-    @BeforeEach
-    void beforeEach(){
-        memberRespository = new MemoryMemberRespository();
-        memberService = new MemberService(memberRespository);
-    }
-
-    @AfterEach
-    void afterEach(){
-        memberRespository.clearStore();
-    }
 
     @Test
     // 테스트 파일은 한글로 적어도 무방.
     void 회원가입() {
         //given
         Member member = new Member();
-        member.setName("spring1");
+        member.setName("spring");
 
         //when
         long saveId = memberService.join(member);
@@ -56,24 +50,5 @@ class MemberServiceTest {
         memberService.join(member1);
         IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-
-        /*
-        try{
-            memberService.join(member2);
-            fail();
-        } catch(IllegalStateException e){
-            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.123");
-        }
-        */
-
-        //then
-    }
-
-    @Test
-    void findMembers() {
-    }
-
-    @Test
-    void findOne() {
     }
 }
