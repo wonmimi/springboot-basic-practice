@@ -24,11 +24,12 @@ class MemberServiceIntegrationTest {
 
 
     @Test
+//    @Commit // 데이터 반영 commit
     // 테스트 파일은 한글로 적어도 무방.
     void 회원가입() {
         //given
         Member member = new Member();
-        member.setName("spring_test2");
+        member.setName("spring");
 
         //when
         long saveId = memberService.join(member);
