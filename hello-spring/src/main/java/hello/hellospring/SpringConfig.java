@@ -1,5 +1,6 @@
 package hello.hellospring;
 
+import hello.hellospring.aop.TimeTraceAOP;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.*;
 import hello.hellospring.service.MemberService;
@@ -53,4 +54,10 @@ public class SpringConfig {
         return new JpaMemberRepository(em);
     }
     */
+
+    // 빈 등록 방법 중 2 (정형화)
+//    @Bean
+//    public TimeTraceAOP timeTraceAOP(){
+//        return new TimeTraceAOP();
+//    }
 }
