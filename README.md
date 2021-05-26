@@ -1,4 +1,4 @@
-# Spring_basic
+# spring-boot-basic
 - - - 
 강의 링크: [URL][link]
 
